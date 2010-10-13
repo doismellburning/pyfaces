@@ -10,8 +10,9 @@ class PyFaceController(object):
         self.facet=pyeigenfaces.egface()
             
     def getExtension(self,fileName):
-        print 'getExtension():'       
-        extension=split(basename(fileName),'.')[1]
+        print 'getExtension():'
+        parts = split(basename(fileName),'.')
+        extension=parts[len(parts) - 1]
         return extension
     def validateSelection(self,fileName,directoryName,numOfEigenfaces,thresholdVal):
         print 'validateSel()::filename=',fileName,'dir=:',directoryName,'thresh=:',thresholdVal,'numOfEigenfaces=:',numOfEigenfaces        

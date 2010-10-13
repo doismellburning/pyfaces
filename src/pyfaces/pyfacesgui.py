@@ -1,5 +1,5 @@
 
-from Tix import FileSelectBox,DirSelectBox
+from Tix import ExFileSelectBox,DirSelectBox
 from Tkinter import *
 from tkFont import Font
 from os.path import join,basename
@@ -87,9 +87,8 @@ class PyFaceUI(object):
         self.qtButton.configure(width=button_width,text="Quit",command=self.quitButtonClick,padx=button_padx,pady=button_pady,anchor=E)       
         self.qtButton.pack(side=RIGHT )
         
-    def makeSelectionWidgets(self):
-        self.imgsel=FileSelectBox(self.imgSelectFrame)        
-        self.imgsel.__setitem__("dir",join(self.imgsel.cget("dir"),".."))
+    def makeSelectionWidgets(self):        
+        self.imgsel=ExFileSelectBox(self.imgSelectFrame)        
         self.imgsel.pack(side=LEFT)
         self.dirsel=DirSelectBox(self.dirSelectFrame) 
         self.dirsel.pack(side=LEFT)        
@@ -119,9 +118,9 @@ class PyFaceUI(object):
         selectedDirectoryName = self.dirsel.cget("value")
         return selectedDirectoryName
 
-    def getSelectedFileName(self):
-        selectedFileName = self.imgsel.selection.cget("value")        
-        self.imgsel.selection.selection_clear()
+    def getSelectedFileName(self):           
+        selectedFileName = self.imgsel.cget("value")      
+        self.imgsel.selection_clear()
         return selectedFileName
 
     def clearAllCanvas(self):
@@ -134,6 +133,7 @@ class PyFaceUI(object):
         self.okButton.configure(state=DISABLED)
         self.clearAllCanvas()        
         selectedFileName = self.getSelectedFileName()
+        print 'okButtonClick()::selectedFileName=%s'%selectedFileName
         selectedDirectoryName = self.getSelectedDirectoryName()
         thresholdvalue = self.getThresholdValue()
         selectedEigenFaces = self.getNumberOfEigenfaces() 
@@ -141,8 +141,7 @@ class PyFaceUI(object):
         self.controller.validateSelection(selectedFileName,selectedDirectoryName,selectedEigenFaces,thresholdvalue)
         
                 
-    def showSelectedImage(self,imageName):
-        print 'entered showSelectedImage()::'
+    def showSelectedImage(self,imageName):        
         if(not imageName is ''):        
             self.selimg=ImageTk.PhotoImage(file=imageName)
             self.selimgtag=self.canvorig.create_image(70,100,image=self.selimg)

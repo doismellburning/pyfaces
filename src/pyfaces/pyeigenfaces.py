@@ -67,6 +67,8 @@ class egface:
         idx = argmin(dist)        
         mindist=sqrt(dist[idx])
         result=''
+        if mindist < 1e-10:
+            mindist=0
         print "mindist:",mindist
         if mindist <= thresholdvalue:
             result=self.bundle.imglist[idx]
