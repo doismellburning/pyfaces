@@ -42,9 +42,8 @@ class FaceBundle:
         self.avgvals=avgvals
         self.evals=evals
 
-class egface:    
+class FaceRec:    
     def validateSelectedImage(self,imgname):
-        print "validateSelectedImage()"               
         selectimg=imageops.XImage(imgname)
         selectwdth=selectimg._width
         selectht=selectimg._height               
@@ -54,7 +53,6 @@ class egface:
             return selectimg
         
     def findMatchingImage(self,imagename,selectedfacesnum,thresholdvalue):
-        print "findMatchingImage()" 
         selectimg=self.validateSelectedImage(imagename)
         inputfacepixels=selectimg._pixellist
         inputface=asfarray(inputfacepixels)
@@ -77,7 +75,6 @@ class egface:
         return mindist,result
     
     def doCalculations(self,dir,imglist,selectednumeigenfaces):
-        print "doCalculations()"        
         self.createFaceBundle(imglist);        
         egfaces=self.bundle.eigenfaces
         adjfaces=self.bundle.adjfaces
@@ -90,7 +87,6 @@ class egface:
         f2.close()
         
     def validateDirectory(self,imgfilenameslist):
-        print "validatedirectory()"        
         if (len(imgfilenameslist)==0):
             print "folder empty!"
             raise DirError("folder empty!")
@@ -110,13 +106,11 @@ class egface:
         return imgfilelist
     
     def calculateWeights(self,eigenfaces,adjfaces,selectedfacesnum):
-        print "calculateweights()"                
         usub=eigenfaces[:selectedfacesnum,:]        
         wts=dot(usub,adjfaces.transpose()).transpose()                         
         return wts           
             
     def createFaceBundle(self,imglist):
-        print "createFaceBundle()"        
         imgfilelist=self.validateDirectory(imglist)
         
         img=imgfilelist[0]
@@ -157,11 +151,9 @@ class egface:
             u[i]=u[i]/norm        
         
         self.bundle=FaceBundle(imglist,imgwdth,imght,adjfaces,u,avgvals,evals)
-        #print "in facebundle:imgwdth=",imgwdth,"imght=",imght
         self.createEigenimages(u)# eigenface images
         
     def reconstructFaces(self,selectedfacesnum):        
-        #reconstruct                  
         recondir='../reconfaces'
         newwt=zeros(self.weights.shape)
         eigenfaces=self.bundle.eigenfaces

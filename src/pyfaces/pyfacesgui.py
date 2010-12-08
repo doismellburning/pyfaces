@@ -95,12 +95,10 @@ class PyFaceUI(object):
         
     
     def displayResultImage(self):
-        print 'displayResultImage()::'
         self.canvresult.delete(ALL)
         self.canvresult.create_image(70, 100, image=self.resimg)
 
     def displayResultMessage(self, message, msgcolor):
-        print 'displayResultMessage()::'
         self.resultdisplay.delete(ALL)
         self.resultdisplay.create_text(1, 40, anchor=W, text=message, fill=msgcolor, font=self.msgfont, width=280)
 
@@ -129,11 +127,9 @@ class PyFaceUI(object):
         self.resultdisplay.delete(ALL)        
     
     def okButtonClick(self):
-        print "okButtonClick(): clicked"
         self.okButton.configure(state=DISABLED)
         self.clearAllCanvas()        
         selectedFileName = self.getSelectedFileName()
-        print 'okButtonClick()::selectedFileName=%s'%selectedFileName
         selectedDirectoryName = self.getSelectedDirectoryName()
         thresholdvalue = self.getThresholdValue()
         selectedEigenFaces = self.getNumberOfEigenfaces() 
@@ -173,12 +169,10 @@ class PyFaceUI(object):
         self.okButton.configure(state=NORMAL)      
               
     def setNumOfEigenfaces(self,numOfEigenfaces):
-        print 'setNumOfEigenfaces()::'        
         self.fspctrlv.set(numOfEigenfaces)        
         self.eigenfacesTxt.update_idletasks()        
             
     def quitButtonClick(self):
-        print "Quit btn  clicked"
         self.myParent.destroy()
                 
 class NoFileSelectError(Exception):
